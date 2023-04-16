@@ -1,8 +1,7 @@
 Modern Honey Network
 
-[![Centos 6](https://github.com/pwnlandia/mhn/actions/workflows/centos6.yml/badge.svg)](https://github.com/pwnlandia/mhn/actions/workflows/centos6.yml)
-[![Ubuntu 16.04](https://github.com/pwnlandia/mhn/actions/workflows/ubuntu1604.yml/badge.svg)](https://github.com/pwnlandia/mhn/actions/workflows/ubuntu1604.yml)
-[![Ubuntu 18.04](https://github.com/pwnlandia/mhn/actions/workflows/ubuntu1804.yml/badge.svg)](https://github.com/pwnlandia/mhn/actions/workflows/ubuntu1804.yml)
+[![Ubuntu 20.04](https://github.com/wrharding/mhn/actions/workflows/ubuntu2004.yml/badge.svg)](https://github.com/wrharding/mhn/actions/workflows/ubuntu2004.yml)
+[![Ubuntu 22.04](https://github.com/wrharding/mhn/actions/workflows/ubuntu2204.yml/badge.svg)](https://github.com/wrharding/mhn/actions/workflows/ubuntu2204.yml)
 ====================
 
 MHN is a centralized server for management and data collection of honeypots. MHN
