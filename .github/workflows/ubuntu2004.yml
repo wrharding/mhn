@@ -66,6 +66,7 @@ jobs:
         run: |
           cd /opt/
           sudo git clone https://github.com/wrharding/mhn.git
+          cd /opt/mhn/
           sudo git checkout mhn-py3
       
       - name: Install MHN dependencies

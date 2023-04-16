@@ -19,7 +19,7 @@ jobs:
   install-mhn-dependencies-master:
     runs-on: ubuntu-22.04
 
-    if: ${{ github.ref == "refs/heads/master" }}
+    if: ${{ github.ref == 'refs/heads/master' }}
 
     steps:
       - uses: actions/checkout@v2
@@ -66,6 +66,7 @@ jobs:
         run: |
           cd /opt/
           sudo git clone https://github.com/wrharding/mhn.git
+          cd /opt/mhn/
           sudo git checkout mhn-py3
       
       - name: Install MHN dependencies
