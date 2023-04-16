@@ -1,4 +1,4 @@
-name: Ubuntu 20.04
+name: Ubuntu 22.04
 
 # Controls when the workflow will run
 on:
@@ -19,7 +19,7 @@ jobs:
   install-mhn-dependencies-master:
     runs-on: ubuntu-22.04
 
-    if: github.ref == "refs/heads/master"
+    if: ${{ github.ref == "refs/heads/master" }}
 
     steps:
       - uses: actions/checkout@v2

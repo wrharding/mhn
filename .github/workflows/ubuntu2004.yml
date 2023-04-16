@@ -19,7 +19,7 @@ jobs:
   install-mhn-dependencies-master:
     runs-on: ubuntu-20.04
 
-    if: github.ref == "refs/heads/master"
+    if: ${{ github.ref == "refs/heads/master" }}
 
     steps:
       - uses: actions/checkout@v2
