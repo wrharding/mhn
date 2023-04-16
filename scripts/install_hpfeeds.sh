@@ -55,7 +55,7 @@ cat > /opt/hpfeeds/users.json <<EOF
     "owner": "my-owner",
     "secret": "my-really-strong-passphrase",
     "subchans": ["chan1"],
-    "pubchans": ["chan2"],
+    "pubchans": ["chan2"]
   }
 }
 EOF
