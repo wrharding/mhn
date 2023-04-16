@@ -27,18 +27,10 @@ bash install_mongo.sh
 
 $PIP install virtualenv
 
-cd /tmp
-wget https://github.com/pwnlandia/hpfeeds/releases/download/libev-4.15/libev-4.15.tar.gz
-tar zxvf libev-4.15.tar.gz 
-cd libev-4.15
-./configure && make && make install
-ldconfig /usr/local/lib/
-
-
 mkdir -p /opt
 cd /opt
 rm -rf /opt/hpfeeds
-git clone https://github.com/pwnlandia/hpfeeds
+git clone https://github.com/hpfeeds/hpfeeds.git
 chmod 755 -R hpfeeds
 cd hpfeeds
 $VIRTUALENV -p $PYTHON env
