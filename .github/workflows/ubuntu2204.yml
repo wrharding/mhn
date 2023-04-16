@@ -17,7 +17,7 @@ on:
 
 jobs:
   install-mhn-dependencies-master:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     if: github.ref == "refs/heads/master"
 
@@ -55,7 +55,7 @@ jobs:
           cd /opt/mhn/scripts/
           sudo ./install_honeymap.sh
   install-mhn-dependencies-mhn-py3:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     if: ${{ github.ref == 'refs/heads/mhn-py3' }}
 
