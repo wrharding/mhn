@@ -42,13 +42,14 @@ pip install cffi
 pip install pyopenssl==17.3.0
 pip install pymongo
 pip install .
+pip install -r requirements.txt
 deactivate
 
 mkdir -p /var/log/mhn
 mkdir -p /etc/supervisor/
 mkdir -p /etc/supervisor/conf.d
 
-cat >> /opt/hpfeeds/users.json <<EOF
+cat > /opt/hpfeeds/users.json <<EOF
 {
   "my-user-ident": {
     "owner": "my-owner",
@@ -59,9 +60,9 @@ cat >> /opt/hpfeeds/users.json <<EOF
 }
 EOF
 
-cat >> /etc/supervisor/conf.d/hpfeeds-broker.conf <<EOF 
+cat > /etc/supervisor/conf.d/hpfeeds-broker.conf <<EOF 
 [program:hpfeeds-broker]
-command=/opt/hpfeeds/env/bin/python /opt/hpfeeds/env/bin/hpfeeds-broker -e tcp:port=10000 --exporter=0.0.0.0:9431 --auth=/opt/hpfeeds/users.json
+command=/bin/bash -c 'source /opt/hpfeeds/env/bin/activate && /opt/hpfeeds/env/bin/python /opt/hpfeeds/env/bin/hpfeeds-broker -e tcp:port=10000 --exporter=0.0.0.0:9431 --auth=/opt/hpfeeds/users.json'
 directory=/opt/hpfeeds
 stdout_logfile=/var/log/mhn/hpfeeds-broker.log
 stderr_logfile=/var/log/mhn/hpfeeds-broker.err
