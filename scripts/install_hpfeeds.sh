@@ -16,26 +16,6 @@ if [ -f /etc/debian_version ]; then
     $PIP install virtualenv
     VIRTUALENV=`which virtualenv`
 
-elif [ -f /etc/redhat-release ]; then
-    export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:$PATH
-    yum install -y yum-utils
-    yum-config-manager --add-repo=https://copr.fedoraproject.org/coprs/librehat/shadowsocks/repo/epel-6/librehat-shadowsocks-epel-6.repo
-    yum update -y
-    yum -y install epel-release libffi-devel libssl-devel shadowsocks-libev-devel
-
-    if  [ ! -f /usr/local/bin/python2.7 ]; then
-        $SCRIPTS/install_python2.7.sh
-    fi
-
-    #use python2.7
-    PYTHON=/usr/local/bin/python2.7
-    PIP=/usr/local/bin/pip2.7
-    $PIP install virtualenv
-    VIRTUALENV=/usr/local/bin/virtualenv
-
-    #install supervisor from pip2.7
-    $SCRIPTS/install_supervisord.sh
-
 else
     echo -e "ERROR: Unknown OS\nExiting!"
     exit -1
