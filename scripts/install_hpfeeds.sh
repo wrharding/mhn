@@ -49,20 +49,9 @@ mkdir -p /var/log/mhn
 mkdir -p /etc/supervisor/
 mkdir -p /etc/supervisor/conf.d
 
-cat > /opt/hpfeeds/users.json <<EOF
-{
-  "my-user-ident": {
-    "owner": "my-owner",
-    "secret": "my-really-strong-passphrase",
-    "subchans": ["chan1"],
-    "pubchans": ["chan2"]
-  }
-}
-EOF
-
 cat > /etc/supervisor/conf.d/hpfeeds-broker.conf <<EOF 
 [program:hpfeeds-broker]
-command=/bin/bash -c 'source /opt/hpfeeds/env/bin/activate && /opt/hpfeeds/env/bin/python /opt/hpfeeds/env/bin/hpfeeds-broker -e tcp:port=10000 --exporter=0.0.0.0:9431 --auth=/opt/hpfeeds/users.json'
+command=/bin/bash -c 'source /opt/hpfeeds/env/bin/activate && /opt/hpfeeds/env/bin/python /opt/hpfeeds/env/bin/hpfeeds-broker -e tcp:port=10000 --exporter=0.0.0.0:9431 --auth="mongodb://127.0.0.1:27017/hpfeeds"'
 directory=/opt/hpfeeds
 stdout_logfile=/var/log/mhn/hpfeeds-broker.log
 stderr_logfile=/var/log/mhn/hpfeeds-broker.err
