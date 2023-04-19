@@ -39,8 +39,9 @@ $VIRTUALENV -p $PYTHON3 env
 . env/bin/activate
 
 pip install cffi
-pip install pyopenssl==17.3.0
+pip install pyopenssl==23.1.1
 pip install pymongo
+pip install motor==2.5.1
 pip install .
 pip install -r requirements.txt
 deactivate
