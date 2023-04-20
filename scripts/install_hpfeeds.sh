@@ -9,11 +9,9 @@ MHN_HOME=$SCRIPTS/..
 if [ -f /etc/debian_version ]; then
     apt-get -y update
     # this needs to be installed before calling "which pip", otherwise that command fails
-    apt-get -y install libffi-dev build-essential python-pip python-dev python3 python3-pip git libssl-dev supervisor
+    apt-get -y install python3 python3-pip git supervisor
 
-    PYTHON=`which python`
     PYTHON3=`which python3`
-    PIP=`which pip`
     PIP3=`which pip3`
     $PIP3 install virtualenv
     VIRTUALENV=`which virtualenv`
