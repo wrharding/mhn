@@ -9,32 +9,12 @@ MHN_HOME=$SCRIPTS/..
 if [ -f /etc/debian_version ]; then
     apt-get -y update
     # this needs to be installed before calling "which pip", otherwise that command fails
-    apt-get -y install libffi-dev build-essential python-pip python-dev git libssl-dev supervisor
+    apt-get -y install python3 python3-pip git supervisor
 
-    PYTHON=`which python`
-    PIP=`which pip`
-    $PIP install virtualenv
+    PYTHON3=`which python3`
+    PIP3=`which pip3`
+    $PIP3 install virtualenv
     VIRTUALENV=`which virtualenv`
-
-elif [ -f /etc/redhat-release ]; then
-    export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:$PATH
-    yum install -y yum-utils
-    yum-config-manager --add-repo=https://copr.fedoraproject.org/coprs/librehat/shadowsocks/repo/epel-6/librehat-shadowsocks-epel-6.repo
-    yum update -y
-    yum -y install epel-release libffi-devel libssl-devel shadowsocks-libev-devel
-
-    if  [ ! -f /usr/local/bin/python2.7 ]; then
-        $SCRIPTS/install_python2.7.sh
-    fi
-
-    #use python2.7
-    PYTHON=/usr/local/bin/python2.7
-    PIP=/usr/local/bin/pip2.7
-    $PIP install virtualenv
-    VIRTUALENV=/usr/local/bin/virtualenv
-
-    #install supervisor from pip2.7
-    $SCRIPTS/install_supervisord.sh
 
 else
     echo -e "ERROR: Unknown OS\nExiting!"
@@ -45,41 +25,32 @@ ldconfig /usr/local/lib/
 
 bash install_mongo.sh
 
-$PIP install virtualenv
-
-cd /tmp
-wget https://github.com/pwnlandia/hpfeeds/releases/download/libev-4.15/libev-4.15.tar.gz
-tar zxvf libev-4.15.tar.gz 
-cd libev-4.15
-./configure && make && make install
-ldconfig /usr/local/lib/
-
+$PIP3 install virtualenv
 
 mkdir -p /opt
 cd /opt
 rm -rf /opt/hpfeeds
-git clone https://github.com/pwnlandia/hpfeeds
+git clone https://github.com/hpfeeds/hpfeeds.git
 chmod 755 -R hpfeeds
 cd hpfeeds
-$VIRTUALENV -p $PYTHON env
+$VIRTUALENV -p $PYTHON3 env
 . env/bin/activate
 
 pip install cffi
-pip install pyopenssl==17.3.0
+pip install pyopenssl==23.1.1
 pip install pymongo
-pip install -e git+https://github.com/couozu/pyev.git#egg=pyev
-pip install -e git+https://github.com/pwnlandia/evnet.git#egg=evnet-dev
+pip install motor==2.5.1
 pip install .
+pip install -r requirements.txt
 deactivate
 
 mkdir -p /var/log/mhn
 mkdir -p /etc/supervisor/
 mkdir -p /etc/supervisor/conf.d
 
-
-cat >> /etc/supervisor/conf.d/hpfeeds-broker.conf <<EOF 
+cat > /etc/supervisor/conf.d/hpfeeds-broker.conf <<EOF 
 [program:hpfeeds-broker]
-command=/opt/hpfeeds/env/bin/python /opt/hpfeeds/broker/feedbroker.py
+command=/bin/bash -c 'source /opt/hpfeeds/env/bin/activate && /opt/hpfeeds/env/bin/python /opt/hpfeeds/env/bin/hpfeeds-broker -e tcp:port=10000 --exporter=0.0.0.0:9431 --auth="mongodb://127.0.0.1:27017/hpfeeds"'
 directory=/opt/hpfeeds
 stdout_logfile=/var/log/mhn/hpfeeds-broker.log
 stderr_logfile=/var/log/mhn/hpfeeds-broker.err
