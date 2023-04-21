@@ -7,13 +7,8 @@ SCRIPTS=`dirname "$(readlink -f "$0")"`
 MHN_HOME=$SCRIPTS/..
 
 apt-get update
-apt-get install -y git python-pip python-dev supervisor
-pip install virtualenv
-
-PYTHON=`which python`
-PIP=`which pip`
-$PIP install virtualenv
-VIRTUALENV=`which virtualenv`
+apt-get install -y git python3 python3-pip python2.7 supervisor
+pip3 install virtualenv
 
 bash $SCRIPTS/install_mongo.sh
 
@@ -22,7 +17,7 @@ cd /opt/
 rm -rf /opt/mnemosyne
 git clone https://github.com/pwnlandia/mnemosyne.git
 cd mnemosyne
-$VIRTUALENV -p $PYTHON env
+virtualenv -p python2.7 env
 . env/bin/activate
 pip install -r requirements.txt
 chmod 755 -R .
