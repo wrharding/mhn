@@ -6,24 +6,14 @@ set -x
 SCRIPTS=`dirname "$(readlink -f "$0")"`
 MHN_HOME=$SCRIPTS/..
 
-if [ -f /etc/debian_version ]; then
-    apt-get -y update
-    # this needs to be installed before calling "which pip", otherwise that command fails
-    apt-get -y install python3 python3-pip git supervisor
+apt-get -y update
+# this needs to be installed before calling "which pip", otherwise that command fails
+apt-get -y install python3 python3-pip git supervisor mongodb
 
-    PYTHON3=`which python3`
-    PIP3=`which pip3`
-    $PIP3 install virtualenv
-    VIRTUALENV=`which virtualenv`
-
-else
-    echo -e "ERROR: Unknown OS\nExiting!"
-    exit -1
-fi
-
-ldconfig /usr/local/lib/
-
-bash install_mongo.sh
+PYTHON3=`which python3`
+PIP3=`which pip3`
+$PIP3 install virtualenv
+VIRTUALENV=`which virtualenv`
 
 $PIP3 install virtualenv
 
@@ -61,7 +51,6 @@ autorestart=true
 startsecs=10
 EOF
 
-ldconfig /usr/local/lib/
 /etc/init.d/supervisor start || true
 sleep 5
 supervisorctl update
