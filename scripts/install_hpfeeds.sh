@@ -47,6 +47,8 @@ deactivate
 mkdir -p /var/log/mhn
 mkdir -p /etc/supervisor/
 mkdir -p /etc/supervisor/conf.d
+mkdir -p /opt/hpfeeds/broker/
+cp $SCRIPTS/add_user.py /opt/hpfeeds/broker/add_user.py
 
 cat > /etc/supervisor/conf.d/hpfeeds-broker.conf <<EOF 
 [program:hpfeeds-broker]
