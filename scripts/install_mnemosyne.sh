@@ -6,38 +6,9 @@ set -x
 SCRIPTS=`dirname "$(readlink -f "$0")"`
 MHN_HOME=$SCRIPTS/..
 
-if [ -f /etc/debian_version ]; then
-    OS=Debian  # XXX or Ubuntu??
-
-    apt-get update
-    apt-get install -y git python-pip python-dev supervisor
-    pip install virtualenv
-
-    INSTALLER='apt-get'
-    REPOPACKAGES=''
-
-    PYTHON=`which python`
-    PIP=`which pip`
-    $PIP install virtualenv
-    VIRTUALENV=`which virtualenv`
-
-elif [ -f /etc/redhat-release ]; then
-    OS=RHEL
-    export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:$PATH
-    if  [ ! -f /usr/local/bin/python2.7 ]; then
-        $SCRIPTDIR/install_python2.7.sh
-    fi
-
-    #use python2.7
-    PYTHON=/usr/local/bin/python2.7
-    PIP=/usr/local/bin/pip2.7
-    VIRTUALENV=/usr/local/bin/virtualenv
-
-else
-    echo -e "ERROR: Unknown OS\nExiting!"
-    exit -1
-fi
-
+apt-get update
+apt-get install -y git python3 python3-pip python2.7 python2.7-dev supervisor
+pip3 install virtualenv
 
 bash $SCRIPTS/install_mongo.sh
 
@@ -46,7 +17,7 @@ cd /opt/
 rm -rf /opt/mnemosyne
 git clone https://github.com/pwnlandia/mnemosyne.git
 cd mnemosyne
-$VIRTUALENV -p $PYTHON env
+virtualenv -p python2.7 env
 . env/bin/activate
 pip install -r requirements.txt
 chmod 755 -R .
@@ -88,7 +59,7 @@ python /opt/hpfeeds/broker/add_user.py "$IDENT" "$SECRET" "" "$CHANNELS"
 
 mkdir -p /var/log/mhn/
 
-cat >> /etc/supervisor/conf.d/mnemosyne.conf <<EOF 
+cat > /etc/supervisor/conf.d/mnemosyne.conf <<EOF 
 [program:mnemosyne]
 command=/opt/mnemosyne/env/bin/python runner.py --config mnemosyne.cfg
 directory=/opt/mnemosyne
