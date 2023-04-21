@@ -7,10 +7,8 @@ SCRIPTS=`dirname "$(readlink -f "$0")"`
 MHN_HOME=$SCRIPTS/..
 
 apt-get update
-apt-get install -y git python3 python3-pip python2.7 python2.7-dev supervisor
+apt-get install -y git python3 python3-pip python2.7 python2.7-dev supervisor mongodb
 pip3 install virtualenv
-
-bash $SCRIPTS/install_mongo.sh
 
 mkdir -p /opt
 cd /opt/
