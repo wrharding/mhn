@@ -32,8 +32,6 @@ jobs:
       - name: Install MHN dependencies
         run: |
           sudo apt update && sudo apt upgrade -y
-          sudo apt install -y python-pip
-          sudo pip install --upgrade pip
           sudo apt install apt-transport-https -y
           sudo apt install build-essential -y
           sudo apt remove mongo* -y
@@ -72,8 +70,6 @@ jobs:
       - name: Install MHN dependencies
         run: |
           sudo apt update && sudo apt upgrade -y
-          sudo apt install -y python-pip
-          sudo pip install --upgrade pip
           sudo apt install apt-transport-https -y
           sudo apt install build-essential -y
           sudo apt remove mongo* -y
